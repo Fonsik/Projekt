@@ -1,0 +1,31 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Boat
+{
+  private:
+
+        char dir;
+        int length;
+        vector<int> boatrow;
+        vector<int> boatcol;
+        int hits;
+        string name;
+
+    public:
+
+        //Default contstructor
+        Boat(char d, int lgth, vector<int> r, vector<int> c, int hit, string nme)
+        {
+            dir=d;
+            length=lgth;
+            boatrow=r;
+            boatcol=c;
+            hits=hit;
+            name=nme;
+        }
