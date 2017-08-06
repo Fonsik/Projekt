@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+
+class Statek {
+  char nazwa;
+ public:
+  double v ;
+  Pojazd (string, double) ;
+  virtual ~Pojazd() {};
+  string podajKolor() ;
+  Pojazd operator+= (double);
+
+
+};
+
+Pojazd::Pojazd (string _k, double _x) : kolor (_k), v(_x)  {
+}
+
+string Pojazd::podajKolor() {
+  return kolor;
+}
+
+Pojazd Pojazd::operator+=(double x)
+{
+v+=x;
+return *this;
+}
+
+class Samochod : public Pojazd {
+
+ public:
+ double bak;
+  Samochod (string, double, double);
+  Samochod operator-= (double);
+};
+
+Samochod::Samochod (string _k, double _x, double z) : Pojazd (_k, _x), bak(z) {
+}
+
+Samochod Samochod::operator-=(double x)
+{
+bak-=x;
+return *this;
+}
+
+
+class LodzPodwodna : public Pojazd {
+ public:
+  double zanurzenie;
+  LodzPodwodna (string, double, double);
+  LodzPodwodna operator*= (double);
+};
+
+LodzPodwodna::LodzPodwodna (string _k, double _x, double z) : Pojazd (_k, _x), zanurzenie(z) {
+}
+LodzPodwodna LodzPodwodna::operator*= (double x)
+{
+zanurzenie+=x;
+return *this;
+}
+
+
+
+int main() {
+Samochod S("czarny", 10, 8);
+LodzPodwodna L ("biala", 25, 5);
+cout <<"Staty samochodu: kolor: "<<S.podajKolor()<<", predkosc: "<<S.v<<", bak: "<<S.bak<<endl;
+cout <<"Staty lodzi: kolor: "<<L.podajKolor()<<", predkosc: "<<L.v<<", bak: "<<L.zanurzenie<<endl;
+S+=10;
+S-=10;
+L+=10;
+L*=10;
+cout <<"Po zmianie o 10:"<< endl;
+cout <<"Staty samochodu: kolor: "<<S.podajKolor()<<", predkosc: "<<S.v<<", bak: "<<S.bak<<endl;
+cout <<"Staty lodzi: kolor: "<<L.podajKolor()<<", predkosc: "<<L.v<<", bak: "<<L.zanurzenie<<endl;
+
+
+
+  return 0;
+  }
+
