@@ -49,6 +49,17 @@ int main ()
     const int pl=8;
     int board[pl][pl];
 
+    cout<<"  ";
+
+    for (int i=0; i<pl; i++)
+    {
+
+        cout<<i+1;
+        cout<<" ";
+    }
+
+    cout<<""<<endl;
+
     for (int i=0; i<pl; i++)
     {
         for (int j=0; j<pl; j++)
