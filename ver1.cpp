@@ -46,6 +46,33 @@ int main ()
     Statek Motorowka ('M',2,2,0);
     Statek Niszczyciel ('#',3,1,1);
     Statek Torpedowiec ('%',4,0,2);
+    const int pl=8;
+    int board[pl][pl];
+
+    for (int i=0; i<pl; i++)
+    {
+        for (int j=0; j<pl; j++)
+        {
+            board[i][j]=46;
+        }
+    }
+
+    char kol=65;
+
+    for (int i=0; i<pl; i++)
+    {
+        char z=kol+i;
+        cout<<z;
+        cout<<" ";
+        for (int j=0; j<pl; j++)
+        {
+            char z=board[i][j];
+            cout <<z;
+            cout<<" ";
+        }
+        cout <<""<< endl;
+    }
+
     return 0;
 }
 
