@@ -1,81 +1,29 @@
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <string>
+#include <vector>
 using namespace std;
 
 class Statek {
-  char nazwa;
+  char znak;
  public:
-  double v ;
-  Pojazd (string, double) ;
-  virtual ~Pojazd() {};
-  string podajKolor() ;
-  Pojazd operator+= (double);
-
-
+  int rozmiar;
+  int ruch;
+  int atak;
+  Statek (char, int, int, int) ;
+  virtual ~Statek() {};
+  int trafienie () ;
+  
+ Statek::Statek (char _c, int _r, int _x, int _a) : z
 };
 
-Pojazd::Pojazd (string _k, double _x) : kolor (_k), v(_x)  {
-}
-
-string Pojazd::podajKolor() {
-  return kolor;
-}
-
-Pojazd Pojazd::operator+=(double x)
+int main ()
 {
-v+=x;
-return *this;
+    Statek Motorowka ('M',2,2,0);
+    Statek Niszczyciel ('#',3,1,1);
+    Statek Torpedowiec ('%',4,0,2);
+    return 0;
 }
 
-class Samochod : public Pojazd {
-
- public:
- double bak;
-  Samochod (string, double, double);
-  Samochod operator-= (double);
-};
-
-Samochod::Samochod (string _k, double _x, double z) : Pojazd (_k, _x), bak(z) {
-}
-
-Samochod Samochod::operator-=(double x)
-{
-bak-=x;
-return *this;
-}
-
-
-class LodzPodwodna : public Pojazd {
- public:
-  double zanurzenie;
-  LodzPodwodna (string, double, double);
-  LodzPodwodna operator*= (double);
-};
-
-LodzPodwodna::LodzPodwodna (string _k, double _x, double z) : Pojazd (_k, _x), zanurzenie(z) {
-}
-LodzPodwodna LodzPodwodna::operator*= (double x)
-{
-zanurzenie+=x;
-return *this;
-}
-
-
-
-int main() {
-Samochod S("czarny", 10, 8);
-LodzPodwodna L ("biala", 25, 5);
-cout <<"Staty samochodu: kolor: "<<S.podajKolor()<<", predkosc: "<<S.v<<", bak: "<<S.bak<<endl;
-cout <<"Staty lodzi: kolor: "<<L.podajKolor()<<", predkosc: "<<L.v<<", bak: "<<L.zanurzenie<<endl;
-S+=10;
-S-=10;
-L+=10;
-L*=10;
-cout <<"Po zmianie o 10:"<< endl;
-cout <<"Staty samochodu: kolor: "<<S.podajKolor()<<", predkosc: "<<S.v<<", bak: "<<S.bak<<endl;
-cout <<"Staty lodzi: kolor: "<<L.podajKolor()<<", predkosc: "<<L.v<<", bak: "<<L.zanurzenie<<endl;
-
-
-
-  return 0;
-  }
 
