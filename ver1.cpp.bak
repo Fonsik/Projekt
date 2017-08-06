@@ -6,17 +6,36 @@
 using namespace std;
 
 class Statek {
-  char znak;
+    char znak;
  public:
   int rozmiar;
   int ruch;
   int atak;
+  Statek () {};
   Statek (char, int, int, int) ;
-  virtual ~Statek() {};
-  int trafienie () ;
-  
- Statek::Statek (char _c, int _r, int _x, int _a) : z
+  ~Statek () {};
+  int trafienie ;
+  bool status ();
+
+  void hit ()
+  {
+      trafienie++;
+  }
 };
+
+ Statek::Statek (char c, int r, int x, int a)
+ {
+     znak=c;
+     rozmiar=r;
+     ruch=x;
+     atak=a;
+ }
+ Statek::status()
+ 
+ if trafienie>0
+ {
+     return 
+ }
 
 int main ()
 {
