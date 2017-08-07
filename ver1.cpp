@@ -99,22 +99,26 @@ int main ()
     cin.ignore();
 
     int kier; //Wskazuje na polozenie statku, 0 dla pionu, 1 dla poziomu.
-
+    char M=Motorowka.znak;
+    char N=Niszczyciel.znak;
+    char T=Torpedowiec.znak;
     for(int x=0; x<Magazyn.size(); x++)
     {
         for (int i=0; i<(Magazyn[x]).ilosc; i++)
         {
-            p:
+            r:
+
             kier=rand()%2;
             wspl1=rand()%pl;
             wspl2=rand()%pl;
 
-            if (board[wspl1][wspl2]!=woda ||board[wspl1+1][wspl2]!=woda ||board[wspl1-1][wspl2]!=woda ||board[wspl1][wspl2+1]!=woda ||board[wspl1][wspl2-1]!=woda )
-            {
-                goto p;
-            }
-            else{
+            //if ((board[wspl1][wspl2]=(M||N||T)) || (board[wspl1-1][wspl2-1]=(M||N||T)) || (board[wspl1+1][wspl2-1]=(M||N||T)) || (board[wspl1-1][wspl2+1]=(M||N||T)) || (board[wspl1+1][wspl2+1]=(M||N||T)) || (board[wspl1][wspl2+1]=(M||N||T)) || (board[wspl1][wspl2-1]=(M||N||T)) || (board[wspl1+1][wspl2]=(M||N||T)) || (board[wspl1-1][wspl2]=(M||N||T)))
+            //{
+             //   goto r;
+           // }
 
+            //else
+           // {
             if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )         //Sprawdzenie warunku, czy statek nie wyjdzie poza plansze.
             {
                 for(int j=0; j<(Magazyn[x]).rozmiar; j++)
@@ -146,7 +150,7 @@ int main ()
                     board [wspl1-j][wspl2]=(Magazyn[x]).znak;
                 }
             }
-        }
+        //}
         }
     }
 
