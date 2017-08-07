@@ -31,9 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="ver1.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="ver1.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -9,7 +9,7 @@ class Statek {
 
  public:
   char znak;
-  int rozmiar;
+  int rozmiar;          //Klasa Statek uniwersalna dla kazdego typu statku
   int ruch;
   int atak;
   Statek () {};
@@ -21,7 +21,7 @@ class Statek {
 
   void hit ()
   {
-      trafienie++;
+      trafienie++;      // Licznik trafien
   }
 };
 
@@ -36,7 +36,7 @@ bool Statek::status()
 {
  if (trafienie>0)
     {
-       return 1;
+       return 1;      //Status, czy zatopiony.
     }
  else
     {
@@ -50,20 +50,20 @@ int main ()
 {
     srand(time(0));
     Statek Motorowka ('M',2,2,0);
-    Statek Niszczyciel ('#',3,1,1);
+    Statek Niszczyciel ('#',3,1,1);   //Tworzenie statkow na samym poczatku, wygodniej tak, niz tworzyc podklasy.
     Statek Torpedowiec ('%',4,0,2);
 
-    const int pl=8;
-    const int lst=4;
-    int board[pl][pl];
+    const int pl=8;   //Rozmiar planszy
+    const int lst=4;  //Liczba statkow
+    int board[pl][pl];  //Plansza
 
     cout<<"  ";
 
     for (int i=0; i<pl; i++)
     {
 
-        cout<<i+1;
-        cout<<" ";
+        cout<<i+1;      
+        cout<<" ";              //Tworzenie wspolrzednych
     }
 
     cout<<""<<endl;
@@ -72,7 +72,7 @@ int main ()
     {
         for (int j=0; j<pl; j++)
         {
-            board[i][j]=46;
+            board[i][j]=46;         //Rysowanie planszy
         }
     }
 
@@ -92,12 +92,20 @@ int main ()
         cout <<""<< endl;
     }
     int wspl;
-    
+
+    cout<<""<<endl;
+    cout << "Nacisnij ENTER, by rozpoczac losowanie." << endl;      //Sprawia wrazenie profesjonalizmu
+    cin.ignore();
+
+    int kier; //Wskazuje na polozenie statku, 0 dla pionu, 1 dla poziomu.
+
     for (int i=0; i<lst; i++)
     {
-        wspl=rand()%10+1;
-        
-    
+        kier=rand()%2;
+        wspl=rand()%pl+1;
+        cout<<kier<<endl;
+    }
+
 
     return 0;
 }
