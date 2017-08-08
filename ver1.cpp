@@ -95,13 +95,19 @@ int main ()
     int wspl1, wspl2;
 
     cout<<""<<endl;
+
+    string znaki = "# % M";
+
+   // if ((znaki.find(board[5][5])))
+   // {
+   //     cout <<"OK"<< endl;
+   // }
+
     cout << "Nacisnij ENTER, by rozpoczac losowanie." << endl;      //Sprawia wrazenie profesjonalizmu
     cin.ignore();
 
     int kier; //Wskazuje na polozenie statku, 0 dla pionu, 1 dla poziomu.
-    char M=Motorowka.znak;
-    char N=Niszczyciel.znak;
-    char T=Torpedowiec.znak;
+
     for(int x=0; x<Magazyn.size(); x++)
     {
         for (int i=0; i<(Magazyn[x]).ilosc; i++)
@@ -112,23 +118,30 @@ int main ()
             wspl1=rand()%pl;
             wspl2=rand()%pl;
 
-            //if ((board[wspl1][wspl2]=(M||N||T)) || (board[wspl1-1][wspl2-1]=(M||N||T)) || (board[wspl1+1][wspl2-1]=(M||N||T)) || (board[wspl1-1][wspl2+1]=(M||N||T)) || (board[wspl1+1][wspl2+1]=(M||N||T)) || (board[wspl1][wspl2+1]=(M||N||T)) || (board[wspl1][wspl2-1]=(M||N||T)) || (board[wspl1+1][wspl2]=(M||N||T)) || (board[wspl1-1][wspl2]=(M||N||T)))
-            //{
-             //   goto r;
-           // }
-
-            //else
-           // {
-            if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )         //Sprawdzenie warunku, czy statek nie wyjdzie poza plansze.
+            if(board[wspl1][wspl2]!=woda)
             {
+                goto r;
+            }
+
+
+            if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )    //Sprawdzenie warunku, czy statek nie wyjdzie poza plansze
+            {
+            for (int y=0; y<(Magazyn[x]).rozmiar+2; y++)
+                        {
+                           if(!znaki.find(board[wspl1-1][wspl2-1+y]) || !znaki.find(board[wspl1+1][wspl2-1+y])|| !znaki.find(board[wspl1][wspl2-1+y])) {goto r;}
+                        }
+
                 for(int j=0; j<(Magazyn[x]).rozmiar; j++)
                 {
                     board [wspl1][wspl2+j]=(Magazyn[x]).znak;
                 }
             }
-
             else if (kier==0 && wspl2 > (Magazyn[x]).rozmiar)
             {
+                 for (int y=0; y<(Magazyn[x]).rozmiar+2; y++)
+                        {
+                           if(!znaki.find(board[wspl1-1][wspl2+1-y]) || !znaki.find(board[wspl1+1][wspl2+1-y])|| !znaki.find(board[wspl1][wspl2+1-y])) {goto r;}
+                        }
             for(int j=0; j<(Magazyn[x]).rozmiar; j++)
                 {
                     board [wspl1][wspl2-j]=(Magazyn[x]).znak;
@@ -137,6 +150,10 @@ int main ()
 
             else if (kier==1 && wspl1 <= (Magazyn[x]).rozmiar)
             {
+                 for (int y=0; y<(Magazyn[x]).rozmiar+2; y++)
+                        {
+                           if(!znaki.find(board[wspl1-1+y][wspl2-1]) || !znaki.find(board[wspl1-1+y][wspl2+1])|| !znaki.find(board[wspl1-1+y][wspl2])) {goto r;}
+                        }
                 for(int j=0; j<(Magazyn[x]).rozmiar; j++)
                 {
                     board [wspl1+j][wspl2]=(Magazyn[x]).znak;
@@ -145,12 +162,16 @@ int main ()
 
             else
             {
+                 for (int y=0; y<(Magazyn[x]).rozmiar+2; y++)
+                        {
+                           if(!znaki.find(board[wspl1+1-y][wspl2-1]) || !znaki.find(board[wspl1+1-y][wspl2+1])|| !znaki.find(board[wspl1+1-y][wspl2])) { goto r;}
+                        }
                 for(int j=0; j<(Magazyn[x]).rozmiar; j++)
                 {
                     board [wspl1-j][wspl2]=(Magazyn[x]).znak;
                 }
             }
-        //}
+
         }
     }
 
