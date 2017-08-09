@@ -92,14 +92,15 @@ int main ()
         }
         cout <<""<< endl;
     }
-    int wspl1, wspl2;
+
 
     cout<<""<<endl;
 
     cout << "Nacisnij ENTER, by rozpoczac losowanie." << endl;      //Sprawia wrazenie profesjonalizmu
     cin.ignore();
 
-    int kier; //Wskazuje na polozenie statku, 0 dla pionu, 1 dla poziomu.
+
+    int wspl1, wspl2, kier; //Wskazuje na polozenie statku; kier 0 dla pionu, 1 dla poziomu.
 
     for(int x=0; x<Magazyn.size(); x++)
     {
@@ -117,17 +118,17 @@ int main ()
             }
 
 
-            if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )    //Sprawdzenie warunku, czy statek nie wyjdzie poza plansze
+            if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )              //Sprawdzenie warunku, czy statek nie wyjdzie poza plansze
             {
-                for (int q=0; q<Magazyn.size(); q++)
+                for (int q=0; q<Magazyn.size(); q++)                            //Wybor znaku
                     {
-                       for (int w=-1; w<2; w++)
+                       for (int w=-1; w<2; w++)                                      //Test wzdluz jednej wspolrzednej
                             {
-                                for (int y=-1; y<(Magazyn[x]).rozmiar+2; y++)
+                                for (int y=-1; y<(Magazyn[x]).rozmiar+2; y++)       //Test wzdluz statku
                                 {
                                     if(board[wspl1+w][wspl2+y]==(Magazyn[q]).znak)
                                     {
-                                        goto r;
+                                        goto r;                                       //Ostateczny test kolizji i powrot do losowania
                                     }
                                 }
                             }
@@ -222,6 +223,7 @@ int main ()
         kol+=i;
         cout<<kol;
         cout<<" ";
+
         for (int j=0; j<pl; j++)
         {
             char z=board[i][j];

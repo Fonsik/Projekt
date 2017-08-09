@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1502311598 source:c:\users\fonsi\documents\github\projekt\ver1.cpp
+1502311915 source:c:\users\fonsi\documents\github\projekt\ver1.cpp
 	<iostream>
 	<ctime>
 	<cstdlib>
