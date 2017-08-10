@@ -238,33 +238,32 @@ int main ()
 
     p:
     cout<< "Wybierz statek. Wspolrzedne sa postaci [znak][liczba] "<< endl;
-    int w2;
-    unsigned char w;
+    unsigned char w1, w2;
     cout << "Podaj pierwsza wspolrzedna: ";
-    cin >> w;
+    cin >> w1;
     cout << "Podaj druga wspolrzedna: ";
     cin >> w2;
     cout <<""<< endl;
-    w2-=1;
+    w2-=49;
 
-    if (w>=65 && w<97)
+    if (w1>=65 && w1<97)
     {
-        w-=65;
+        w1-=65;
     }
     else
     {
-        w-=97;
+        w1-=97;
     }
 
 
 
-if (w2>pl-1 || w>pl-1 ||w2<0 ||w<0)
+if (w2>pl-1 || w1>pl-1 ||w2<0 ||w1<0)
     {
        cout << "To nie sa poprawne wspolrzedne" << endl;
        cout<<""<<endl;
        goto p;
     }
-    else if (board[w][w2]==woda)
+    else if (board[w1][w2]==woda)
     {
         cout << "Wybierz statek, nie wode." << endl;
         cout<<""<<endl;
@@ -274,7 +273,7 @@ if (w2>pl-1 || w>pl-1 ||w2<0 ||w<0)
     {
         for (unsigned int i=0; i<Magazyn.size(); i++)
         {
-            if (board[w][w2]==(Magazyn[i]).znak)
+            if (board[w1][w2]==(Magazyn[i]).znak)
                 {
                     cout << (Magazyn[i]).nazwa <<endl;
                 }
