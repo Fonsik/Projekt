@@ -20,7 +20,6 @@ class Statek {
   ~Statek () {};
   int trafienie=0 ;
   bool status ();
-  char zwzn ();
 
   void hit ()
   {
