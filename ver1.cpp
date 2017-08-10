@@ -8,13 +8,15 @@ using namespace std;
 class Statek {
 
  public:
+
+  string nazwa;
   char znak;
   int rozmiar;          //Klasa Statek uniwersalna dla kazdego typu statku
   int ruch;
   int atak;
   int ilosc;
   Statek () {};
-  Statek (char, int, int, int, int) ;
+  Statek (string, char, int, int, int, int) ;
   ~Statek () {};
   int trafienie=0 ;
   bool status ();
@@ -26,8 +28,9 @@ class Statek {
   }
 };
 
- Statek::Statek (char c, int r, int x, int a, int b)
+ Statek::Statek (string s, char c, int r, int x, int a, int b)
  {
+     nazwa=s;
      znak=c;
      rozmiar=r;
      ruch=x;
@@ -50,9 +53,9 @@ bool Statek::status()
 int main ()
 {
     srand(time(0));
-    Statek Motorowka ('M',2,2,0,2);
-    Statek Niszczyciel ('#',3,1,1,1);   //Tworzenie statkow na samym poczatku, wygodniej tak, niz tworzyc podklasy.
-    Statek Torpedowiec ('%',4,0,2,1);
+    Statek Motorowka ("Motorowka", 'M',2,2,0,2);
+    Statek Niszczyciel ("Niszczyciel",'#',3,1,1,1);   //Tworzenie statkow na samym poczatku, wygodniej tak, niz tworzyc podklasy.
+    Statek Torpedowiec ("Torpedowiec",'%',4,0,2,1);
     char woda = '.';
     const int pl=8;      //Rozmiar planszy
     char board[pl][pl];  //Plansza
@@ -102,7 +105,7 @@ int main ()
 
     int wspl1, wspl2, kier; //Wskazuje na polozenie statku; kier 0 dla pionu, 1 dla poziomu.
 
-    for(int x=0; x<Magazyn.size(); x++)
+    for(unsigned int x=0; x<Magazyn.size(); x++)
     {
         for (int i=0; i<(Magazyn[x]).ilosc; i++)
         {
@@ -120,7 +123,7 @@ int main ()
 
             if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )              //Sprawdzenie warunku, czy statek nie wyjdzie poza plansze
             {
-                for (int q=0; q<Magazyn.size(); q++)                            //Wybor znaku
+                for (unsigned int q=0; q<Magazyn.size(); q++)                            //Wybor znaku
                     {
                        for (int w=-1; w<2; w++)                                      //Test wzdluz jednej wspolrzednej
                             {
@@ -141,7 +144,7 @@ int main ()
             }
             else if (kier==0 && wspl2 > (Magazyn[x]).rozmiar)
             {
-                for (int q=0; q<Magazyn.size(); q++)
+                for (unsigned int q=0; q<Magazyn.size(); q++)
                     {
                        for (int w=-1; w<2; w++)
                             {
@@ -162,7 +165,7 @@ int main ()
 
             else if (kier==1 && wspl1 <= (Magazyn[x]).rozmiar)
             {
-               for (int q=0; q<Magazyn.size(); q++)
+               for (unsigned int q=0; q<Magazyn.size(); q++)
                     {
                        for (int w=-1; w<2; w++)
                             {
@@ -183,7 +186,7 @@ int main ()
 
             else
             {
-               for (int q=0; q<Magazyn.size(); q++)
+               for (unsigned int q=0; q<Magazyn.size(); q++)
                     {
                        for (int w=-1; w<2; w++)
                             {
@@ -207,7 +210,7 @@ int main ()
 
      cout<<"  ";
 
-    for (int i=0; i<pl; i++)
+    for (int i=0; i<pl; i++)        //Ponowne rysowanie planszy
     {
 
         cout<<i+1;
@@ -232,6 +235,52 @@ int main ()
         }
         cout <<""<< endl;
     }
+
+    p:
+    cout<< "Wybierz statek. Wspolrzedne sa postaci [znak][liczba] "<< endl;
+    int w2;
+    unsigned char w;
+    cout << "Podaj pierwsza wspolrzedna: ";
+    cin >> w;
+    cout << "Podaj druga wspolrzedna: ";
+    cin >> w2;
+    cout <<""<< endl;
+    w2-=1;
+
+    if (w>=65 && w<97)
+    {
+        w-=65;
+    }
+    else
+    {
+        w-=97;
+    }
+
+
+
+if (w2>pl-1 || w>pl-1 ||w2<0 ||w<0)
+    {
+       cout << "To nie sa poprawne wspolrzedne" << endl;
+       cout<<""<<endl;
+       goto p;
+    }
+    else if (board[w][w2]==woda)
+    {
+        cout << "Wybierz statek, nie wode." << endl;
+        cout<<""<<endl;
+        goto p;
+    }
+    else
+    {
+        for (unsigned int i=0; i<Magazyn.size(); i++)
+        {
+            if (board[w][w2]==(Magazyn[i]).znak)
+                {
+                    cout << (Magazyn[i]).nazwa <<endl;
+                }
+        }
+    }
+
 
 
     return 0;
