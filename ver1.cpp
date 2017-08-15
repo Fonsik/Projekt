@@ -1,3 +1,21 @@
+/** @file */
+
+/**
+
+* @file ver1.cpp
+* @author Tomasz Fas
+* @date 15.08.2017
+* @brief Podstawowa wersja projektu "Statki".
+*
+* \mainpage Opis
+* Jedyne co robi ten program, to rysowanie planszy i losowanie poycji statkow.
+* No i jeszcze statek mozna wybrac.
+* Jako, ze Doxygen nie wspiera komentarzy znajdujacych sie wewnatrz funkcji, to dokumentacja
+* tego projektu jest dosc uboga. Tworzenie statkow, planszy i losowanie odbywa sie wewnatrz funkcji main().
+* Szczegolowe komentarze znajduja sie w kodzie zrodlowym.
+
+*/
+
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -5,13 +23,19 @@
 #include <vector>
 using namespace std;
 
+/**
+*Klasa Statek uniwersalna dla kazdego typu statku.
+
+*Dla wersji uproszczonej wygodniej jest stworzyc uniwersaslna klase, niz rozne podklasy.
+
+*/
 class Statek {
 
  public:
 
   string nazwa;
   char znak;
-  int rozmiar;          ///Klasa Statek uniwersalna dla kazdego typu statku
+  int rozmiar;
   int ruch;
   int atak;
   int ilosc;
@@ -21,12 +45,26 @@ class Statek {
   int trafienie=0 ;
   bool status ();
 
+  /**
+   *Licznik trafien
+
+   *Dodany dla ozdoby
+   */
   void hit ()
   {
-      trafienie++;      /// Licznik trafien
+      trafienie++;
   }
 };
+/**
+* Konstruktor klasy Statki
 
+* Nazwa
+* Znak
+* Rozmiar
+* Liczba pol ruchu
+* Liczba atakow
+* Liczba statkow
+*/
  Statek::Statek (string s, char c, int r, int x, int a, int b)
  {
      nazwa=s;
@@ -36,11 +74,18 @@ class Statek {
      atak=a;
      ilosc=b;
  }
+
+ /**
+ *Status, czy zatopiony.
+
+ *Niezbyt przydatny w tej wersji
+
+ */
 bool Statek::status()
 {
  if (trafienie>0)
     {
-       return 1;      ///Status, czy zatopiony.
+       return 1;
     }
  else
     {
@@ -49,35 +94,41 @@ bool Statek::status()
 
 }
 
+
 int main ()
 {
-    srand(time(0));
-    Statek Motorowka ("Motorowka", 'M',2,2,0,2);
-    Statek Niszczyciel ("Niszczyciel",'#',3,1,1,1);   ///Tworzenie statkow na samym poczatku, wygodniej tak, niz tworzyc podklasy.
+    srand (time(0));
+
+    Statek Motorowka ("Motorowka", 'M',2,2,0,2);    //Tworzenie potrzebnych statkow
+    Statek Niszczyciel ("Niszczyciel",'#',3,1,1,1); // Mozna latwo dodac nowy statek, stworzyc po prostu nowy obiekt.
     Statek Torpedowiec ("Torpedowiec",'%',4,0,2,1);
-    char woda = '.';
-    const int pl=8;      ///Rozmiar planszy
-    char board[pl][pl];  ///Plansza
-    vector <Statek> Magazyn {Motorowka, Niszczyciel,Torpedowiec};
+
+    // Podstawowe wielkosci
+
+    char woda = '.'; // Uniwersalny znak dla wody.
+    const int pl=8; // Stala wielkosc planszy.
+    char board[pl][pl]; // Tablica znakow jako plansza.
+
+    vector <Statek> Magazyn {Motorowka, Niszczyciel,Torpedowiec};    // Latwy dostep do wszystkich statkow.
+
     cout<<"  ";
 
-    for (int i=0; i<pl; i++)
+    for (int i=0; i<pl; i++)     // Tworzenie wspolrzednych
     {
 
         cout<<i+1;
-        cout<<" ";              ///Tworzenie wspolrzednych
+        cout<<" ";
     }
 
     cout<<""<<endl;
 
-    for (int i=0; i<pl; i++)
+    for (int i=0; i<pl; i++) // Rysowanie planszy
     {
         for (int j=0; j<pl; j++)
         {
-            board[i][j]=woda;         ///Rysowanie planszy
+            board[i][j]=woda;
         }
     }
-
 
 
     for (int i=0; i<pl; i++)
@@ -95,14 +146,16 @@ int main ()
         cout <<""<< endl;
     }
 
-
     cout<<""<<endl;
 
-    cout << "Nacisnij ENTER, by rozpoczac losowanie." << endl;      ///Sprawia wrazenie profesjonalizmu
+    cout << "Nacisnij ENTER, by rozpoczac losowanie." << endl;  // Sprawia wrazenie profesjonalizmu
     cin.ignore();
 
 
-    int wspl1, wspl2, kier;                         ///Wskazuje na polozenie statku; kier 0 dla pionu, 1 dla poziomu.
+
+    int wspl1, wspl2, kier;
+
+    // Poczatek losowania pozycji statków.
 
     for(unsigned int x=0; x<Magazyn.size(); x++)
     {
@@ -110,7 +163,7 @@ int main ()
         {
             r:
 
-            kier=rand()%2;
+            kier=rand()%2;       // Wskazuje na polozenie statku. 0 dla pionu, 1 dla poziomu.
             wspl1=rand()%pl;
             wspl2=rand()%pl;
 
@@ -120,17 +173,19 @@ int main ()
             }
 
 
-            if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )               ///Sprawdzenie warunku, czy statek nie wyjdzie poza plansze
+
+            if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )  // Sprawdzenie warunku, czy statek nie wyjdzie poza planszê.
             {
-                for (unsigned int q=0; q<Magazyn.size(); q++)                            ///Wybor znaku
+                for (unsigned int q=0; q<Magazyn.size(); q++)   // Test wzdluz jednej wspólrzêdnej.
                     {
-                       for (int w=-1; w<2; w++)                                         ///Test wzdluz jednej wspolrzednej
+                       for (int w=-1; w<2; w++)
                             {
-                                for (int y=-1; y<(Magazyn[x]).rozmiar+2; y++)           ///Test wzdluz statku
+                                for (int y=-1; y<(Magazyn[x]).rozmiar+2; y++)   // Test wzdluz statku.
                                 {
-                                    if(board[wspl1+w][wspl2+y]==(Magazyn[q]).znak)
+
+                                    if(board[wspl1+w][wspl2+y]==(Magazyn[q]).znak)  // Ostateczny test kolizji i ewentualny powrot do losowania.
                                     {
-                                        goto r;                                       ///Ostateczny test kolizji i powrot do losowania
+                                        goto r;
                                     }
                                 }
                             }
@@ -209,7 +264,7 @@ int main ()
 
      cout<<"  ";
 
-    for (int i=0; i<pl; i++)        ///Ponowne rysowanie planszy
+    for (int i=0; i<pl; i++) //Ponowne rysowanie planszy.
     {
 
         cout<<i+1;
@@ -236,8 +291,8 @@ int main ()
     }
 
     p:
-    cout<< "Wybierz statek. Wspolrzedne sa postaci [znak][liczba] "<< endl;   ///Wybor statku
-    unsigned char w1, w2;                           ///Taka forma powoduje najmniej bledow
+    cout<< "Wybierz statek. Wspolrzedne sa postaci [znak][liczba] "<< endl; // Wybor statku.
+    unsigned char w1, w2; // Takie wspolrzedne powoduja najmniej bledow
     cout << "Podaj pierwsza wspolrzedna: ";
     cin >> w1;
     cout << "Podaj druga wspolrzedna: ";
@@ -256,7 +311,7 @@ int main ()
 
 
 
-if (w2>pl-1 || w1>pl-1 ||w2<0 ||w1<0)           /// Warunek poprawnosci wspolrzednych
+if (w2>pl-1 || w1>pl-1 ||w2<0 ||w1<0) // Warunek poprawnosci wspolrzednych.
     {
        cout << "To nie sa poprawne wspolrzedne" << endl;
        cout<<""<<endl;
@@ -278,6 +333,7 @@ if (w2>pl-1 || w1>pl-1 ||w2<0 ||w1<0)           /// Warunek poprawnosci wspolrze
                 }
         }
     }
+
 
 
 
