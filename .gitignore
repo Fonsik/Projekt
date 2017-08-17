@@ -64,3 +64,8 @@ doxygen/doxyfile
 dox/dokumenty/rtf/refman.rtf
 dox/dokumenty/latex/Makefile
 dox/dokumenty/latex/make.bat
+*.rtf
+*.bat
+*.check_cache
+*.txt
+doxygen/dok/latex/Makefile

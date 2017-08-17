@@ -41,7 +41,7 @@
 				<doxyfile_project />
 				<doxyfile_build />
 				<doxyfile_warnings />
-				<doxyfile_output latex="1" />
+				<doxyfile_output latex="1" man="1" />
 				<doxyfile_dot class_diagrams="1" />
 				<general />
 			</DoxyBlocks>

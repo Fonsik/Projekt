@@ -4,15 +4,17 @@
 
 * @file ver1.cpp
 * @author Tomasz Fas
-* @date 14.08.2017
+* @date 17.08.2017
 * @brief Podstawowa wersja projektu "Statki".
 *
 * \mainpage Opis
-* Jedyne co robi ten program, to rysowanie planszy i losowanie poycji statkow.
+* Jedyne co robi ten program, to rysowanie planszy i losowanie pozycji statkow.
 * No i jeszcze statek mozna wybrac.
+*
+* Wiekszosc programu znajduje sie w funkcji main().
+*
 * Jako, ze Doxygen nie wspiera komentarzy znajdujacych sie wewnatrz funkcji, to dokumentacja
-* tego projektu jest dosc uboga. Tworzenie statkow, planszy i losowanie odbywa sie wewnatrz funkcji main().
-* Szczegolowe komentarze znajduja sie w kodzie zrodlowym.
+* tego projektu jest dosc uboga.
 
 */
 
@@ -35,10 +37,10 @@ class Statek {
 
   string nazwa;
   char znak;
-  int rozmiar;
-  int ruch;
-  int atak;
-  int ilosc;
+  int rozmiar; /**< Dlugosc statku */
+  int ruch;  /**< O ile pol moze sie statek przemiescic */
+  int atak; /**< Ile strzalow moze oddac statek */
+  int ilosc; /**< Ile jest statkow danego typu */
   Statek () {};
   Statek (string, char, int, int, int, int) ;
   ~Statek () {};
@@ -55,8 +57,17 @@ class Statek {
       trafienie++;
   }
 };
-
- Statek::Statek (string s, char c, int r, int x, int a, int b) /**< Nazwa, znak, rozmiar, liczba pol ruchu, liczba atakow, liczba statkow. */
+/**
+* Konstruktor klasy Statki
+*
+* \param s Nazwa
+* \param c Znak
+* \param r Rozmiar
+* \param x Liczba pol ruchu
+* \param a Liczba atakow
+* \param b Liczba statkow
+*/
+ Statek::Statek (string s, char c, int r, int x, int a, int b)
  {
      nazwa=s;
      znak=c;
@@ -85,46 +96,28 @@ bool Statek::status()
 
 }
 
-/**
-* @fn
-* @brief Funkcja glowna.
-*
-*/
-int main ()
+const char woda = '.'; /**< Uniwersalny znak dla wody. */
+const int pl=8; /**< Stala wielkosc planszy. */
+
+
+/** \brief Funkcja rysuje plansze do gry.
+ *
+ * Argumentem wejscia jest tablica znakow,
+ * Rozmiar tablicy jest uzalezniony
+ * od globalnej stalej /param pl.
+ *
+ */
+int plansza (char board [pl][pl])
 {
-    srand (time(0));
-
-    Statek Motorowka ("Motorowka", 'M',2,2,0,2);    //Tworzenie potrzebnych statkow
-    Statek Niszczyciel ("Niszczyciel",'#',3,1,1,1); // Mozna latwo dodac nowy statek, stworzyc po prostu nowy obiekt.
-    Statek Torpedowiec ("Torpedowiec",'%',4,0,2,1);
-
-    // Podstawowe wielkosci
-
-    char woda = '.'; // Uniwersalny znak dla wody.
-    const int pl=8; // Stala wielkosc planszy.
-    char board[pl][pl]; // Tablica znakow jako plansza.
-
-    vector <Statek> Magazyn {Motorowka, Niszczyciel,Torpedowiec};    // Latwy dostep do wszystkich statkow.
-
     cout<<"  ";
 
-    for (int i=0; i<pl; i++)     // Tworzenie wspolrzednych
+    for (int i=0; i<pl; i++)
     {
-
         cout<<i+1;
         cout<<" ";
     }
 
     cout<<""<<endl;
-
-    for (int i=0; i<pl; i++) // Rysowanie planszy
-    {
-        for (int j=0; j<pl; j++)
-        {
-            board[i][j]=woda;
-        }
-    }
-
 
     for (int i=0; i<pl; i++)
     {
@@ -132,23 +125,34 @@ int main ()
         kol+=i;
         cout<<kol;
         cout<<" ";
+
         for (int j=0; j<pl; j++)
         {
             char z=board[i][j];
             cout <<z;
             cout<<" ";
         }
+
         cout <<""<< endl;
     }
 
     cout<<""<<endl;
 
-    cout << "Nacisnij ENTER, by rozpoczac losowanie." << endl;  // Sprawia wrazenie profesjonalizmu
-    cin.ignore();
+    return 0;
+}
 
-
-
-    int wspl1, wspl2, kier;
+/** \brief Funkcja losuje pozycja statkow
+ * \param Magazyn wektor gromadzacy wszystkie statki.
+ * \param board to plansza.
+ *
+ * Funkcja ta losuje poczatkowe wspolrzedne statku oraz jego kierunek,
+ * a nastepnie na podstawie tych danych oraz wielkosci statku okresla,
+ * czy wystepuja kolizje z innymi obiektami. Jesli nie funkcja ta wpisuje statek
+ * do tablicy, czyli planszy.
+ */
+int losowanie (vector <Statek> Magazyn, char board [pl][pl])
+{
+   int wspl1, wspl2, kier;
 
     // Poczatek losowania pozycji statków.
 
@@ -171,11 +175,11 @@ int main ()
 
             if (kier==0 && wspl2 <= (Magazyn[x]).rozmiar )  // Sprawdzenie warunku, czy statek nie wyjdzie poza planszê.
             {
-                for (unsigned int q=0; q<Magazyn.size(); q++)   // Test wzdluz jednej wspólrzêdnej.
+                for (unsigned int q=0; q<Magazyn.size(); q++)   // Wszystkie znaki statkow zostana sprawdzone.
                     {
-                       for (int w=-1; w<2; w++)
+                       for (int w=-1; w<2; w++)     //Test z bokow statku i wzdluz statku.
                             {
-                                for (int y=-1; y<(Magazyn[x]).rozmiar+2; y++)   // Test wzdluz statku.
+                                for (int y=-1; y<(Magazyn[x]).rozmiar+2; y++)   // Test jednej kolumny\wiersza.
                                 {
 
                                     if(board[wspl1+w][wspl2+y]==(Magazyn[q]).znak)  // Ostateczny test kolizji i ewentualny powrot do losowania.
@@ -257,37 +261,48 @@ int main ()
         }
     }
 
-     cout<<"  ";
+    return 0;
+}
 
-    for (int i=0; i<pl; i++) //Ponowne rysowanie planszy.
+/** \brief Funkcja glowna.
+ *
+ * W funkcji glownej powolano do istnienia statki oraz plansze.
+ * Korzystajac z funkcji narysowano plansze oraz wylosowano pozycje statkow.
+ * W funkcji main() jest zaimplementowana funkcja wyboru statku.
+ *
+ */
+int main ()
+{
+    srand (time(0));
+
+    Statek Motorowka ("Motorowka", 'M',2,2,0,2);    //Tworzenie potrzebnych statkow
+    Statek Niszczyciel ("Niszczyciel",'#',3,1,1,1); // Mozna latwo dodac nowy statek, stworzyc po prostu nowy obiekt.
+    Statek Torpedowiec ("Torpedowiec",'%',4,0,2,1);
+
+    char board[pl][pl]; // Tablica znakow jako plansza.
+
+    vector <Statek> Magazyn {Motorowka, Niszczyciel,Torpedowiec};    // Latwy dostep do wszystkich statkow.
+
+    for (int i=0; i<pl; i++) // Wypelnianie planszy woda.
     {
-
-        cout<<i+1;
-        cout<<" ";
-    }
-
-    cout<<""<<endl;
-
-
-    for (int i=0; i<pl; i++)
-    {
-        char kol=65;
-        kol+=i;
-        cout<<kol;
-        cout<<" ";
-
         for (int j=0; j<pl; j++)
         {
-            char z=board[i][j];
-            cout <<z;
-            cout<<" ";
+            board[i][j]=woda;
         }
-        cout <<""<< endl;
     }
 
+    plansza (board);
+
+    cout << "Nacisnij ENTER, by rozpoczac losowanie." << endl;  // Sprawia wrazenie profesjonalizmu
+    cin.ignore();
+
+    losowanie(Magazyn, board);
+    plansza (board);
+
     p:
+    cout <<""<< endl;
     cout<< "Wybierz statek. Wspolrzedne sa postaci [znak][liczba] "<< endl; // Wybor statku.
-    unsigned char w1, w2; // Takie wspolrzedne powoduja najmniej bledow
+    unsigned char w1, w2;   // Takie wspolrzedne powoduja najmniej bledow
     cout << "Podaj pierwsza wspolrzedna: ";
     cin >> w1;
     cout << "Podaj druga wspolrzedna: ";
